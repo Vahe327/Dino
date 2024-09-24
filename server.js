@@ -15,7 +15,7 @@ const tonconnect = new TonConnectServer({
 app.get('/authRequest', (req, res) => {
     const request = tonconnect.createRequest({
         image_url: 'https://ddejfvww7sqtk.cloudfront.net/images/landing/ton-nft-tegro-dog/avatar/image_d0315e1461.jpg',
-        callback_url: `http://193.203.162.185:${port}/tonconnect`,
+        callback_url: `http://server:${port}/tonconnect`,
         items: [{
             type: AuthRequestTypes.ADDRESS,
             required: true
