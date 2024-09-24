@@ -5,7 +5,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppI
 from telegram.ext import Application, CommandHandler, CallbackContext
 
 # Телеграм токен
-TELEGRAM_TOKEN = '7097257861:AAGsnvA-Xm3rhEXk_syDkwUtbseesM_WX9U'  # Замените на ваш токен
+TELEGRAM_TOKEN = 'Token'  # Замените на ваш токен
 
 # URL вашего приложения
 FLASK_APP_URL = 'https://grgr.cryptosymbiotic.com'
