@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GrGr Friends</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <style>
+        body, html {
+            overflow: hidden;
+            height: 100%;
+            background-color: #000;
+            color: #ffd700;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', cursive;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+            width: 100vw;
+            user-select: none;
+            position: relative;
+        }
+        .grgr-title-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 30%;
+            background-color: #000;
+            color: #ffd700;
+            padding-top: 20px;
+        }
+        .grgr-title {
+            font-size: 2.0em;
+            color: green;
+        }
+        .my-friends {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .referral-count {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        .reward-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 5%;
+            background-color: #444;
+            color: #ffd700;
+            padding: 10px 20px;
+            font-size: 0.6em;
+        }
+        .reward {
+            font-size: 0.6em;
+        }
+        .tasks-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background-color: #333;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .small-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 6%;
+            color: #ffd700;
+            background-color: #333;
+            border-bottom: 1px solid #ffd700;
+            padding: 0 20px;
+            font-size: 10px;
+        }
+        .invite-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 6%;
+            color: #ffd700;
+            margin-top: 10px;
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .invite-button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 20px;
+        }
+        .invite-button-small {
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 20px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            background: url('/static/images/telegram.png') no-repeat center center / cover;
+        }
+        .button-bar {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+            background-color: #2F4F4F;
+            padding: 10px 0;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .button-bar a {
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: #fff;
+            background-color: transparent;
+            border: 3px solid green;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5em;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .button-bar a:hover {
+            background-color: green;
+            color: black;
+        }
+        #copy-notification {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #444;
+            color: #ffd700;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="grgr-title-container">
+        <div class="grgr-title">GrGr</div>
+        <div class="my-friends">My Friends</div>
+        <div class="referral-count">Friends: <span id="num-referrals">0</span></div>
+    </div>
+    <div class="reward-container">
+        <div>Earned from Friends</div>
+        <div id="reward-amount">+0 Gr</div>
+    </div>
+    <div class="tasks-container" id="tasks-container"></div>
+    <div class="invite-container">
+        <button class="invite-button" onclick="inviteReferral()">Invite</button>
+        <button class="invite-button invite-button-small" onclick="openTelegram()"></button>
+    </div>
+    <div class="button-bar">
+        <a href="#" id="home-button">Home</a>
+        <a href="#" id="nft-button">NFT</a>
+        <a href="#" id="friends-button">Friends</a>
+        <a href="#" id="earn-button">Earn</a>
+    </div>
+    <div id="copy-notification">COPY</div>
+    <div id="referralLink" style="display: none;">
+        <span id="referralURL"></span>
+    </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+
+        const userId = new URLSearchParams(window.location.search).get('user_id');
+
+        document.getElementById('home-button').href = `index.html?user_id=${userId}`;
+        document.getElementById('nft-button').href = `nft.html?user_id=${userId}`;
+        document.getElementById('friends-button').href = `friends.html?user_id=${userId}`;
+        document.getElementById('earn-button').href = `earn.html?user_id=${userId}`;
+
+        function updateReferralInfo() {
+            fetch(`/referral-info?user_id=${encodeURIComponent(userId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('num-referrals').textContent = data.referrals.length;
+                    document.getElementById('reward-amount').textContent = `+${data.total_earned} Gr`;
+                    
+                    let tasksContainer = document.getElementById('tasks-container');
+                    tasksContainer.innerHTML = '';
+                    data.referrals.forEach(user => {
+                        let container = document.createElement('div');
+                        container.className = 'small-container';
+                        container.innerHTML = `
+                            <div>${user.telegram_username || user.id}</div>
+                            <div>${user.balance} GrGr</div>
+                            
+                        `;
+                        tasksContainer.appendChild(container);
+                    });
+                })
+                .catch(error => console.error('Error fetching referral data:', error));
+        }
+
+        function inviteReferral() {
+            const botUsername = "GrGrGame_bot";
+            const referralURL = `https://t.me/${botUsername}?start=user_${userId}`;
+            const referralLinkElement = document.getElementById('referralURL');
+            referralLinkElement.textContent = referralURL;
+            copyToClipboard(referralURL);
+            showCopyNotification();
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        function showCopyNotification() {
+            const notification = document.getElementById('copy-notification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 1000);
+        }
+
+       function openTelegram() {
+    const botUsername = "GrGrGame_bot";
+    const referralURL = `https://t.me/${botUsername}?start=user_${userId}`;
+    copyToClipboard(referralURL);
+    showCopyNotification();
+    
+       const telegramLink = `tg://msg?text=${encodeURIComponent(referralURL)}`;
+    window.location.href = telegramLink;
+
+   setTimeout(() => {
+        window.location.href = `https://t.me/share/url?url=${encodeURIComponent(referralURL)}`;
+    }, 1000);
+}
+
+
+        updateReferralInfo(); // Ensure referral info is updated on load
+    </script>
+</body>
+</html>

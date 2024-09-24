@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GrGr Earn</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <style>
+        body, html {
+            overflow: hidden;
+            height: 100%;
+            background-color: #000;
+            color: #ffd700;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', cursive;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+            width: 100vw;
+            user-select: none;
+            position: relative;
+        }
+        .grgr-title-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 30%;
+            background-color: #000;
+            color: #ffd700;
+            padding-top: 0px;
+        }
+        .grgr-title {
+            font-size: 2em;
+            color: green;
+            margin-top: -20px;
+        }
+        .subtitle {
+            font-size: 12px;
+            margin-top: 30px;
+        }
+        .reward-total {
+            font-size: 1.2em;
+            color: yellow;
+            margin-top: 10px;
+        }
+        .tasks-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background-color: #333;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .small-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 6%;
+            color: #ffd700;
+            background-color: #333;
+            border-bottom: 0.3px solid green;
+            padding: 0 20px;
+            font-size: 10px;
+        }
+        .button-bar {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+            background-color: #2F4F4F;
+            padding: 10px 0;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .button-bar a {
+            padding: 10px 20px;
+            font-size: 1em;
+            text-decoration: none;
+            color: #fff;
+            background-color: transparent;
+            border: 3px solid green;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5em;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .button-bar a:hover {
+            background-color: green;
+            color: black;
+        }
+        .subscribe-button {
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .reward {
+            color: yellow;
+            font-size: 0.8em;
+        }
+        .subscribed {
+            color: lightgreen;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="grgr-title-container">
+        <div class="grgr-title">GrGr Tasks</div>
+        <div class="subtitle">We'll reward you immediately with points after each task completion.</div>
+        <div class="reward-total" id="reward-total">Total Rewards: 0</div>
+    </div>
+    <div class="tasks-container">
+        <div class="small-container" id="small-container-1">
+            <span><a href="https://t.me/ettoonn" target="_blank">Telegram</a></span>
+            <div>
+                <span class="reward">+1500</span>
+                <button class="subscribe-button" onclick="subscribe(1, 1500)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-2">
+            <span>XCom</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(2, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-3">
+            <span>Twitter</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(3, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-4">
+            <span>Facebook</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(4, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-5">
+            <span>Instagram</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(5, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-6">
+            <span>YouTube</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(6, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-7">
+            <span>Reddit</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(7, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-8">
+            <span>LinkedIn</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(8, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-9">
+            <span>TikTok</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(9, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-10">
+            <span>Discord</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(10, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-11">
+            <span>Snapchat</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(11, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-12">
+            <span>Pinterest</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(12, 1000)">Subscribe</button>
+            </div>
+        </div>
+        <div class="small-container disabled" id="small-container-13">
+            <span>Twitch</span>
+            <div>
+                <span class="reward">+1000</span>
+                <button class="subscribe-button" onclick="subscribe(13, 1000)">Subscribe</button>
+            </div>
+        </div>
+    </div>
+    <div class="button-bar">
+        <a href="#" id="home-button">Home</a>
+        <a href="#" id="nft-button">NFT</a>
+        <a href="#" id="friends-button">Friends</a>
+        <a href="#" id="earn-button">Earn</a>
+    </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+
+        const userId = new URLSearchParams(window.location.search).get('user_id');
+
+        document.getElementById('home-button').href = `index.html?user_id=${userId}`;
+        document.getElementById('nft-button').href = `nft.html?user_id=${userId}`;
+        document.getElementById('friends-button').href = `friends.html?user_id=${userId}`;
+        document.getElementById('earn-button').href = `earn.html?user_id=${userId}`;
+
+        let totalRewards = 0;
+
+        function subscribe(containerId, reward) {
+            const url = document.querySelector(`#small-container-${containerId} a`).href;
+            window.open(url, '_blank');
+
+            fetch('/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id: userId, container_id: containerId, reward: reward })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message.includes('Subscribed')) {
+                    const container = document.getElementById(`small-container-${containerId}`);
+                    const button = container.querySelector('.subscribe-button');
+                    button.textContent = 'Subscribed';
+                    button.disabled = true;
+                    button.classList.add('subscribed');
+                    container.querySelector('.reward').style.display = 'none';
+
+                    updateTotalRewards(reward);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function updateTotalRewards(reward) {
+            fetch('/update_rewards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_id: userId, reward: reward })
+            })
+            .then(response => response.json())
+            .then(data => {
+                totalRewards += reward;
+                document.getElementById('reward-total').textContent = `Total Rewards: ${totalRewards}`;
+            })
+            .catch(error => {
+                console.error('Error updating total rewards:', error);
+            });
+        }
+
+        function getTotalRewards() {
+            fetch(`/get_rewards?user_id=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    totalRewards = data.total_rewards || 0;
+                    document.getElementById('reward-total').textContent = `Total Rewards: ${totalRewards}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching total rewards:', error);
+                });
+        }
+
+        function checkSubscriptionStatus() {
+            fetch(`/check_subscriptions?user_id=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.subscriptions.forEach(sub => {
+                        if (sub.subscribed) {
+                            const container = document.getElementById(`small-container-${sub.container_id}`);
+                            const button = container.querySelector('.subscribe-button');
+                            button.textContent = 'Subscribed';
+                            button.disabled = true;
+                            button.classList.add('subscribed');
+                            container.querySelector('.reward').style.display = 'none';
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching subscription status:', error);
+                });
+        }
+
+        checkSubscriptionStatus();
+        getTotalRewards();
+    </script>
+</body>
+</html>
